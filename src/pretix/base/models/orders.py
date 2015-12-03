@@ -211,7 +211,7 @@ class Order(LoggedModel):
         if self.event.settings.get('payment_term_last') \
                 and now() > self.event.settings.get('payment_term_last'):
             return error_messages['late']
-        if now() < self.expires:
+        if self.status == self.STATUS_PENDING:
             return True
         if not self.event.settings.get('payment_term_accept_late'):
             return error_messages['late']
