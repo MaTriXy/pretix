@@ -103,7 +103,7 @@ class EventSettingsForm(SettingsForm):
     )
     payment_term_accept_late = forms.BooleanField(
         label=_('Accept late payments'),
-        help_text=_("Accept payments for orders even when they are in 'expired' state as long as enough"
+        help_text=_("Accept payments for orders even when they are in 'expired' state as long as enough "
                     "capacity is available. No payments will ever be accepted after the 'Last date of payments' "
                     "configured above."),
         required=False

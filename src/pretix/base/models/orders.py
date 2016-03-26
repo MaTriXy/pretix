@@ -3,7 +3,6 @@ import string
 from datetime import datetime
 from decimal import Decimal
 
-from django import forms
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -202,6 +201,13 @@ class Order(LoggedModel):
             if (cp.item.admission and ask_names) or cp.item.questions.all():
                 return True
         return False  # nothing there to modify
+
+    @property
+    def is_expired_by_time(self):
+        return (
+            self.status == Order.STATUS_PENDING and self.expires < now()
+            and not self.event.settings.get('payment_term_expire_automatically')
+        )
 
     def _can_be_paid(self) -> Union[bool, str]:
         error_messages = {
